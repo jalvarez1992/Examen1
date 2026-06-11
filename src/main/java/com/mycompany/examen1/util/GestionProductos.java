@@ -92,7 +92,7 @@ public class GestionProductos {
             precio = p.getPrecio();
         }
         for (int i = 0; i < productos.size(); i++) {
-            if (precio > productos.get(i).getPrecio()) {
+            if (precio < productos.get(i).getPrecio()) {
                 precio = productos.get(i).getPrecio();
                 p = productos.get(i);
             }
@@ -118,7 +118,7 @@ public class GestionProductos {
             precio = p.getPrecio();
         }
         for (int i = 0; i < productos.size(); i++) {
-            if (precio < productos.get(i).getPrecio()) {
+            if (precio > productos.get(i).getPrecio()) {
                 precio = productos.get(i).getPrecio();
                 p = productos.get(i);
             }
