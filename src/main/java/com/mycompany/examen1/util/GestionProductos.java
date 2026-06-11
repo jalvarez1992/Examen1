@@ -9,49 +9,130 @@ import java.util.ArrayList;
  */
 public class GestionProductos {
     
-    private ArrayList<Producto> productos = new ArrayList<>();
+    private static ArrayList<Producto> productos = new ArrayList<>();
     
-    public void agregarProducto(Producto producto) {
-        this.productos.add(producto);
+    public static void mostrarMenu() {
+        System.out.println("===== SISTEMA DE GESTIÓN DE PRODUCTOS =====");
+        
+        System.out.println("1. Agregar producto");
+        System.out.println("2. Mostrar productos");
+        System.out.println("3. Eliminar producto");
+        System.out.println("4. Actualizar producto");
+        System.out.println("5. Mostrar estadísticas");
+        System.out.println("6. Salir");
+        System.out.println("Seleccione una opción:");
     }
     
-    public boolean eliminarProductoPorCodigo(int codigo) {
-        boolean registroBorrado = false;
-        for (int i = 0; i < this.productos.size(); i++) {
-            if (this.productos.get(i).getCodigo() == codigo) {
-                this.productos.remove(i);
-                registroBorrado = true;
+    public static void agregarProducto(Producto producto) {
+        productos.add(producto);
+        System.out.println("Producto agregado con exito.");
+    }
+    
+    public static void eliminarProductoPorCodigo(int codigo) {
+        boolean ok = false;
+        for (int i = 0; i < productos.size(); i++) {
+            if (productos.get(i).getCodigo() == codigo) {
+                productos.remove(i);
+                ok = true;
             }
         }
-        return registroBorrado;
+        if (ok) {
+            System.out.println("Producto eliminado con exito.");
+        } else {
+            System.out.println("No se encontro el producto a eliminar");
+        }
     }
     
-    public boolean actualizarProductoPorCodigo(int codigo, String nombre, String categoria, double precio, int cantidad) {
-        boolean registroActualizado = false;
-        for (int i = 0; i < this.productos.size(); i++) {
-            if (this.productos.get(i).getCodigo() == codigo) {
-                Producto p = this.productos.get(i);
-                p.setNombre(nombre);
-                p.setCategoria(categoria);
-                p.setPrecio(precio);
-                p.setCantidad(cantidad);
+    public static void actualizarProductoPorCodigo(Producto p) {
+        boolean ok = false;
+        for (int i = 0; i < productos.size(); i++) {
+            if (productos.get(i).getCodigo() == p.getCodigo()) {
                 
-                this.productos.set(i, p);
+                productos.set(i, p);
                 
-                registroActualizado = true;
+                ok = true;
             }
         }
-        return registroActualizado;
+        if (ok) {
+            System.out.println("Producto actualizado con exito.");
+        } else {
+            System.out.println("No se encontro el producto a actualizar");
+        }
     }
     
-    public void mostrarTodosProductos() {
-        for (int i = 0; i < this.productos.size(); i++) {
-            System.out.println("================================");
-            System.out.println("Codigo: " + this.productos.get(i).getCodigo());
-            System.out.println("Nombre: " + this.productos.get(i).getNombre());
-            System.out.println("Categoria: " + this.productos.get(i).getCategoria());
-            System.out.println("Precio: " + this.productos.get(i).getPrecio());
-            System.out.println("Cantidad: " + this.productos.get(i).getCantidad());
+    public static void mostrarTodosProductos() {
+        System.out.println("Lista de productos registrados");
+        for (int i = 0; i < productos.size(); i++) {
+            String pro = "Codigo: " + productos.get(i).getCodigo()
+                    + ", Nombre: " + productos.get(i).getNombre()
+                    + ", Categoria: " + productos.get(i).getCategoria()
+                    + ", Precio: " + productos.get(i).getPrecio()
+                    + ", Cantidad: " + productos.get(i).getCantidad();
+            System.out.println(pro);
+        }
+    }
+    
+    public static void cantidadProductosRegistrados() {
+        System.out.println("Cantidad de productos registrados: " + productos.size());
+    }
+    
+    public static void valorTotalInventario() {
+        double valor = 0;
+        for (int i = 0; i < productos.size(); i++) {
+            valor += productos.get(i).getValor();
+        }
+        System.out.println("Valor total del inventario: " + valor);
+    }
+    
+    public static void productoMasCaro() {
+        double precio = 0;
+        Producto p = null;
+        if (!productos.isEmpty()) {
+            p = productos.getFirst();
+            precio = p.getPrecio();
+        }
+        for (int i = 0; i < productos.size(); i++) {
+            if (precio > productos.get(i).getPrecio()) {
+                precio = productos.get(i).getPrecio();
+                p = productos.get(i);
+            }
+        }
+        System.out.println("Producto mas caro del inventario:");
+        if (p != null) {
+            String pro = "Codigo: " + p.getCodigo()
+                    + ", Nombre: " + p.getNombre()
+                    + ", Categoria: " + p.getCategoria()
+                    + ", Precio: " + p.getPrecio()
+                    + ", Cantidad: " + p.getCantidad();
+            System.out.println(pro);
+        } else {
+            System.out.println("No hay productos");
+        }
+    }
+    
+    public static void productoMasBarato() {
+        double precio = 0;
+        Producto p = null;
+        if (!productos.isEmpty()) {
+            p = productos.getFirst();
+            precio = p.getPrecio();
+        }
+        for (int i = 0; i < productos.size(); i++) {
+            if (precio < productos.get(i).getPrecio()) {
+                precio = productos.get(i).getPrecio();
+                p = productos.get(i);
+            }
+        }
+        System.out.println("Producto mas barato del inventario:");
+        if (p != null) {
+            String pro = "Codigo: " + p.getCodigo()
+                    + ", Nombre: " + p.getNombre()
+                    + ", Categoria: " + p.getCategoria()
+                    + ", Precio: " + p.getPrecio()
+                    + ", Cantidad: " + p.getCantidad();
+            System.out.println(pro);
+        } else {
+            System.out.println("No hay productos");
         }
     }
     

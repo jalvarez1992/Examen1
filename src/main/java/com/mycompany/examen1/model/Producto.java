@@ -62,5 +62,8 @@ public class Producto {
         this.cantidad = cantidad;
     }
     
+    public double getValor() {
+        return this.cantidad * this.precio;
+    }
     
 }
